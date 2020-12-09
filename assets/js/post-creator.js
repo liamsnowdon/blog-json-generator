@@ -3,6 +3,13 @@
         SAVED_FOR_LATER_POSTS: 'savedForLaterPosts'
     };
 
+    var CATEGORIES = [
+        'HTML',
+        'CSS',
+        'JavaScript',
+        'General'
+      ];
+
     var PostCreator = {
         /**
          * Initialises the page.
@@ -20,6 +27,7 @@
             this.author.value = 'Liam Snowdon';
 
             this.initTinymce();
+            this.initChoices();         
             this.initChoicesSelects();
 
             this.connectEvents();
@@ -45,8 +53,6 @@
             this.intro = this.form.querySelector('.js-intro');
             this.datePosted = this.form.querySelector('.js-date-posted');
             this.category = this.form.querySelector('.js-category');
-            this.tags = this.form.querySelector('.js-tags');
-            this.relatedPosts = this.form.querySelector('.js-related-posts');
             this.content = this.form.querySelector('.js-content');
 
             this.saveForLater = document.querySelector('.js-save-for-later');
@@ -80,43 +86,22 @@
         },
 
         initChoices: function () {
-            this.categoryChoices = createChoiceOptions(window.BlogGenerator.Categories);
-            this.tagsChoices = createChoiceOptions(window.BlogGenerator.Tags);
-            this.relatedPostsChoices = createChoiceOptions(window.BlogGenerator.Posts);
-
-            function createChoiceOptions (data) {
-                return data.map(function (item, index) {
-                   return {
-                       value: index + 1,
-                       label: item
-                   };
-                });
-            }
+            this.categoryChoices = CATEGORIES.map(function (category, index) {
+                return {
+                    value: index + 1,
+                    label: category
+                };
+            });
         },
 
         /**
          * Initialises the Choices plugin on select boxes
          */
-        initChoicesSelects: function () {
-            this.initChoices();            
-
+        initChoicesSelects: function () { 
             // Initialises the category Choices select box
             this.categoryChoicesSelect = new Choices('#category', {
                 searchEnabled: false,
                 choices: this.categoryChoices
-            });
-
-            // Initialises the tags Choices multiselect box
-            this.tagsChoicesSelect = new Choices('#tags', {
-                removeItemButton: true,
-                placeholderValue: 'Add tags',
-                choices: this.tagsChoices
-            });
-
-            this.relatedPostsChoicesSelect = new Choices('#related-posts', {
-                removeItemButton: true,
-                placeholderValue: 'Add related post',
-                choices: this.relatedPostsChoices
             });
 
             this.savedForLaterChoicesSelect = new Choices('#saved-for-later', {
@@ -209,14 +194,6 @@
             if (typeof post.category !== 'undefined') {
                 this.categoryChoicesSelect.setChoiceByValue(post.category);
             }
-
-            if (post.tags && post.tags.length > 0) {
-                this.tagsChoicesSelect.setChoiceByValue(post.tags);
-            }
-            
-            if (post.relatedPosts && post.relatedPosts.length > 0) {
-                this.relatedPostsChoicesSelect.setChoiceByValue(post.relatedPosts);
-            }
         },
 
         /**
@@ -233,12 +210,8 @@
                 intro: this.intro.value,
                 datePosted: this.datePosted ? new Date(this.datePosted.value).toISOString() : null,
                 category: Number(this.category.value),
-                tags: Array.from(this.tags.selectedOptions).map(function (option) {
-                    return Number(option.value);
-                }),
-                relatedPosts: Array.from(this.relatedPosts.selectedOptions).map(function (option) {
-                    return Number(option.value);
-                }),
+                tags: ['TAG_ID', 'TAG_ID'],
+                relatedPosts: ['RELATED_POST_ID', 'RELATED_POST_ID'],
 
                 content: this.content.value
             };
@@ -258,8 +231,6 @@
             tinymce.editors.content.resetContent();
             this.datePostedPicker.clear();
             this.categoryChoicesSelect.removeActiveItems();
-            this.tagsChoicesSelect.removeActiveItems();
-            this.relatedPostsChoicesSelect.removeActiveItems();
         },
 
         scrollToForm: function () {
