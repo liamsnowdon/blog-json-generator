@@ -1,0 +1,24 @@
+.c-button {
+    position: relative;
+    display: inline-block;
+    padding: 10px 20px;
+    border: 1px solid $primary-blue;
+    border-radius: 5px;
+    background-color: $primary-blue;
+    color: $primary-white;
+    -webkit-appearance: none;
+    font-size: $body-font-size;
+    line-height: normal;
+    font-family: $header-font-family;
+    font-weight: 600;
+    text-align: center;
+    text-decoration: none;
+    transition: all $button-transition-duration $button-transition-type;
+    cursor: pointer;
+
+    &:hover {
+        background-color: $button-hover-dark;
+        border-color: $button-hover-dark;
+        text-decoration: none;
+    }
+}

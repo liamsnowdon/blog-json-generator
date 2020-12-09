@@ -1,0 +1,22 @@
+.l-content {
+  max-width: $global-width;
+  margin: 0 auto;
+
+  &__title {
+    margin-bottom: 30px;
+    text-align: center;
+    h2 {
+      margin-bottom: 0;
+
+      + p {
+        margin-top: 10px;
+      }
+    }
+
+    p {
+      &:last-child {
+        padding-bottom: 0;
+      }
+    }
+  }
+}

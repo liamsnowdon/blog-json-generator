@@ -1,0 +1,113 @@
+// Table of Contents
+// 1. Display
+// 2. Typography
+// 3. Margin
+// --------------
+
+// 1. Display
+// -------------
+.d-flex {
+  display: flex !important;
+}
+
+.d-inline {
+  display: inline !important;
+}
+
+.align-center {
+  align-items: center !important;
+}
+
+.justify-center {
+  justify-content: center !important;
+}
+
+.justify-between {
+    justify-content: space-between !important;
+}
+
+.justify-end {
+  justify-content: flex-end !important;
+}
+
+// 2. Typography
+// --------------
+
+.fw-500 {
+  font-weight: 500 !important;
+}
+
+.fw-600 {
+  font-weight: 600 !important;
+}
+
+.fw-700 {
+  font-weight: 700 !important;
+}
+
+.fs-italic {
+    font-style: italic !important;
+}
+
+.txt-center {
+  text-align: center !important;
+}
+
+.ws-no-wrap {
+  white-space: nowrap !important;
+}
+
+// 3. Margin
+// --------------
+
+.m-0 {
+    margin: 0 !important;
+}
+
+.mt-0 {
+    margin-top: 0 !important;
+}
+
+.mt-20 {
+  margin-top: 20px !important;
+}
+
+.mr-0 {
+    margin-right: 0 !important;
+}
+
+.mr-20 {
+  margin-right: 20px !important;
+}
+
+.mb-0 {
+    margin-bottom: 0 !important;
+}
+
+.mb-5 {
+    margin-bottom: 5px !important;
+}
+
+.mb-8 {
+    margin-bottom: 8px !important;
+}
+
+.mb-10 {
+    margin-bottom: 10px !important;
+}
+
+.mb-20 {
+  margin-bottom: 20px !important;
+}
+
+.ml-0 {
+    margin-left: 0 !important;
+}
+
+.blue-highlight {
+    color: $primary-blue !important;
+}
+
+.white-highlight {
+    color: $primary-white !important;
+}

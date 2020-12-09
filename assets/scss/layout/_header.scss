@@ -1,0 +1,22 @@
+.l-header {
+    $block: &;
+
+    padding: 50px 25px;
+    background: $primary-color;
+    color: $primary-white;
+    text-align: center;
+
+    &__content {
+        max-width: $global-width;
+        margin: 0 auto;
+        text-align: center;
+    }
+
+    &__heading {
+        margin: 0;
+        
+        + p {
+            margin-top: 10px;
+        }
+    }
+}

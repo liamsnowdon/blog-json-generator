@@ -1,0 +1,98 @@
+// Table of Contents
+// 1. Globals
+// 2. Colours
+// 3. Typography
+// 4. Buttons
+// 5. Breakpoints
+// 6. Grid
+// 7. Maps
+// 8. Vendor Settings
+
+// 1. Globals
+// --------------
+$global-width: 1360px;
+
+// 2. Colours
+// --------------
+@import 'colours';
+
+// 3. Typography
+// --------------
+
+@import url('https://fonts.googleapis.com/css?family=Montserrat:500,500i,600,600i,700,700i&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600,600i,700,700i&display=swap');
+
+$header-font-family: 'Montserrat', Arial, sans-serif;
+$body-font-family: 'Source Sans Pro', Arial, sans-serif;
+$header-font-sizes: (
+    'mobile': (
+        'h1': 40px,
+        'h2': 36px,
+        'h3': 28px,
+        'h4': 24px,
+        'h5': 20px,
+        'h6': 18px
+    ),
+    'desktop': (
+        'h1': 48px,
+        'h2': 36px,
+        'h3': 28px,
+        'h4': 24px,
+        'h5': 20px,
+        'h6': 18px
+    )
+    
+);
+$body-font-size: 1.1rem;
+$body-small-font-size: 0.8rem;
+
+// 4. Buttons
+// --------------
+
+$button-hover-dark: darken($primary-blue, 10%);
+// $button-disabled-background: scale_color(#777, $lightness: 50%);
+// $button-disabled-text: #58595B;
+
+$button-transition-duration: 0.3s;
+$button-transition-type: ease-out;
+
+// 5. Breakpoints
+// --------------
+
+/// A map of breakpoints to be used in media queries
+///
+/// @group Breakpoints
+/// @type Map
+$breakpoints: (
+        '': 0,
+        tiny: 320,
+        small: 480,
+        medium: 768,
+        large: 1024,
+        mega: 1440
+);
+
+// 6. Grid
+// --------------
+
+$grid-columns: 12;
+$grid-gutter: 26px;
+
+// 7. Maps
+// --------------
+
+/// A map of z-indexes to keep all in one place. Ideally, you shouldn't be using z-index values directly as a value, take it from this map.
+///
+/// @type Map
+$z-index: (
+    dialog: 200,
+    pageOverlay: 190,
+    navigation: 100,
+    navigationOverlay: 95,
+    stickyNavigation: 90
+);
+
+// 8. Vendor Settings
+// --------------
+
+$fa-font-path: '../fonts/fontawesome';

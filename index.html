@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+    
+    <title>Blog JSON Generator</title>
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="description" content="Welcome to my blog! A place for fancy, cool front end tips and tricks!">
+
+    <!-- Favicon -->
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#252830">
+    <meta name="msapplication-TileColor" content="#00aba9">
+    <meta name="theme-color" content="#252830">
+
+    <link rel="stylesheet" href="/assets/css/styles.css">
+  </head>
+  <body>
+    <div class="l-header">
+      <div class="l-header__content">
+        <h1 class="l-header__heading">Blog JSON Generator</h1>
+        <p>
+          Use this tool to create blog posts and tags. After filling out the appropriate fields, hit the "Copy to JSON" button to copy the 
+          JSON data.
+
+          Blog posts can be edited by providing the JSON from data.json or from selecting from the "saved for later" dropdown.
+        </p>
+      </div>
+    </div>
+
+  <main>
+    <div 
+      id="edit-post" 
+      class="l-wrapper l-wrapper--grey-2"
+    >
+      <div class="l-content">
+        <div class="l-content__title">
+          <h2>Edit a post</h2>
+        </div>
+          
+        <div class="l-grid">
+          <div class="l-grid__row">            
+            <div class="l-grid__column l-grid__column--12 l-grid__column--medium-6">
+              <form class="js-load-json-form">
+                <p>Load a blog post for editing from its JSON, located in posts.json.</p>
+
+                <div class="c-textarea">
+                  <textarea
+                    class="c-textarea__input js-json"
+                    required
+                    rows="8"
+                  ></textarea>
+                </div>
+                
+
+                <div class="d-flex justify-end mt-20 mb-20">
+                  <button class="c-button">Load JSON</button>
+                </div>
+              </form>
+            </div>
+
+            <div class="l-grid__column l-grid__column--12 l-grid__column--medium-6">
+              <form class="js-saved-for-later-form">
+                <p>Continue editing the posts that have been saved for later.</p>
+                <select
+                  id="saved-for-later"
+                  class="js-saved-for-later"
+                  required
+                  name
+                > 
+                  <option value="" placeholder>Select a post</option>
+                </select>
+
+                <div class="d-flex justify-end mt-20 mb-20">
+                  <button class="c-button mr-20 js-delete-saved-for-later" type="button">Delete</button>
+                  <button class="c-button">Load saved post</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div 
+      id="create-post" 
+      class="l-wrapper"
+    >
+      <div class="l-content">
+        <div class="l-content__title">
+          <h2>Create a post</h2>
+        </div>
+        <div class="l-grid">
+          <form class="js-post-creator-form">
+            <h3>General</h3>
+
+            <div class="l-grid__row l-grid__row--column-margins">            
+              
+              <div class="l-grid__column l-grid__column--12 l-grid__column--medium-6 l-grid__column-large-4">
+                <div class="c-input">
+                  <input 
+                    id="id"
+                    class="c-input__input js-id"
+                    placeholder="ID"
+                    type="number"
+                    name="id"
+                    required
+                  />
+
+                  <label class="c-input__label" for="id">ID</label>
+                </div>
+              </div>
+
+              
+              <div class="l-grid__column l-grid__column--12 l-grid__column--medium-6 l-grid__column-large-4">
+                <div class="c-input">
+                  <input 
+                    id="file"
+                    class="c-input__input js-file"
+                    placeholder="HTML File"
+                    type="text"
+                    name="file"
+                    autocomplete="off"
+                    required
+                  />
+
+                  <label class="c-input__label" for="file">HTML File</label>
+                </div>
+              </div>
+
+              
+              <div class="l-grid__column l-grid__column--12 l-grid__column--medium-6 l-grid__column-large-4">
+                <div class="c-input">
+                  <input 
+                    id="image-url"
+                    class="c-input__input js-image-url"
+                    placeholder="Image URL"
+                    type="text"
+                    name="image-url"
+                    required
+                  />
+
+                  <label class="c-input__label" for="image-url">Image URL</label>
+                </div>
+              </div>
+
+              
+              <div class="l-grid__column l-grid__column--12 l-grid__column--medium-6 l-grid__column-large-4">
+                <div class="c-input">
+                  <input 
+                    id="author"
+                    class="c-input__input js-author"
+                    placeholder="Author"
+                    type="text"
+                    name="author"
+                    required
+                  />
+
+                  <label class="c-input__label" for="author">Author</label>
+                </div>
+              </div>
+
+              
+              <div class="l-grid__column l-grid__column--12 l-grid__column--medium-6 l-grid__column-large-4">
+                <select 
+                  id="related-posts"
+                  name="related-posts"
+                  multiple 
+                  class="js-related-posts"
+                ></select>
+              </div>
+            </div>
+            
+            <h3>Header</h3>
+
+            <div class="l-grid__row l-grid__row--column-margins">
+              
+              <div class="l-grid__column l-grid__column--12 l-grid__column--medium-6">
+                <div class="c-input">
+                  <input 
+                    id="title"
+                    class="c-input__input js-title"
+                    placeholder="Title"
+                    autocomplete="off"
+                    type="text"
+                    name="title"
+                    required
+                  />
+
+                  <label class="c-input__label" for="title">Title</label>
+                </div>
+              </div>
+
+              
+              <div class="l-grid__column l-grid__column--12 l-grid__column--medium-6">
+                <div class="c-input">
+                  <input 
+                    id="intro"
+                    class="c-input__input js-intro"
+                    placeholder="Intro"
+                    autocomplete="off"
+                    type="text"
+                    name="intro"
+                    required
+                  />
+
+                  <label class="c-input__label" for="intro">Intro</label>
+                </div>
+              </div>
+            </div>
+
+            <div class="l-grid__row l-grid__row--column-margins">
+              
+              <div class="l-grid__column l-grid__column--12 l-grid__column--medium-6 l-grid__column-large-4">
+                <div class="c-input">
+                  <input 
+                    id="datePosted"
+                    class="c-input__input js-date-posted"
+                    placeholder="Date Posted"
+                    type="text"
+                    name="datePosted"
+                    autocomplete="off"
+                    required
+                  />
+
+                  <label class="c-input__label" for="datePosted">Date Posted</label>
+                </div>
+              </div>
+
+              
+              <div class="l-grid__column l-grid__column--12 l-grid__column--medium-6 l-grid__column-large-4">
+                <select 
+                  id="category"
+                  name="category"
+                  class="js-category"
+                  required
+                >
+                  <option value="" placeholder>Please select a category</option>
+                </select>
+              </div>
+
+              
+              <div class="l-grid__column l-grid__column--12 l-grid__column--medium-6 l-grid__column-large-4">
+                <select 
+                  id="tags"
+                  name="tags"
+                  multiple 
+                  class="js-tags"
+                ></select>
+              </div>
+            </div>
+
+            <h3>Content</h3>
+
+            <textarea name="content" id="content" rows="5" class="js-content"></textarea>
+
+            <div class="d-flex justify-end mt-20">
+              <button class="c-button mr-20 js-save-for-later" type="button">Save for later</button>
+              <button class="c-button">Copy to JSON</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  
+    <div class="l-wrapper l-wrapper--grey-2">
+      <div class="l-content">
+        <div class="l-content__title">
+          <h2>Create a tag</h2>
+        </div>
+        <div class="l-grid">
+          <form class="js-tag-creator-form">
+            <div class="l-grid__row l-grid__row--column-margins">            
+              
+              <div class="l-grid__column l-grid__column--12 l-grid__column--medium-6 l-grid__column-large-4">
+                <div class="c-input">
+                  <input 
+                    id="tag-id"
+                    class="c-input__input js-id"
+                    placeholder="ID"
+                    type="number"
+                    name="tag-id"
+                    required
+                  />
+
+                  <label class="c-input__label" for="tag-id">ID</label>
+                </div>
+              </div>
+            </div>
+
+            <div class="l-grid__row l-grid__row--column-margins">
+              
+              <div class="l-grid__column l-grid__column--12 l-grid__column--medium-6 l-grid__column-large-4">
+                <div class="c-input">
+                  <input 
+                    id="tag-file"
+                    class="c-input__input js-file"
+                    placeholder="HTML File"
+                    type="text"
+                    name="tag-file"
+                    required
+                  />
+
+                  <label class="c-input__label" for="tag-file">HTML File</label>
+                </div>
+              </div>
+
+              
+              <div class="l-grid__column l-grid__column--12 l-grid__column--medium-6 l-grid__column-large-4">
+                <div class="c-input">
+                  <input 
+                    id="tag-image-url"
+                    class="c-input__input js-image-url"
+                    placeholder="Image URL"
+                    type="text"
+                    name="tag-image-url"
+                    required
+                  />
+
+                  <label class="c-input__label" for="tag-image-url">Image URL</label>
+                </div>
+              </div>
+            </div>
+
+            <div class="l-grid__row l-grid__row--column-margins">
+              
+              <div class="l-grid__column l-grid__column--12 l-grid__column--medium-6">
+                <div class="c-input">
+                  <input 
+                    id="tag-name"
+                    class="c-input__input js-name"
+                    placeholder="Name"
+                    type="text"
+                    name="tag-name"
+                    required
+                  />
+
+                  <label class="c-input__label" for="tag-name">Name</label>
+                </div>
+              </div>
+
+              
+              <div class="l-grid__column l-grid__column--12 l-grid__column--medium-6">
+                <div class="c-input">
+                  <input 
+                    id="tag-intro"
+                    class="c-input__input js-intro"
+                    placeholder="Intro"
+                    type="text"
+                    name="tag-intro"
+                    required
+                  />
+
+                  <label class="c-input__label" for="tag-intro">Intro</label>
+                </div>
+              </div>
+            </div>
+
+            <div class="d-flex justify-end mt-20">
+              <button class="c-button">Copy to JSON</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </main>
+    
+  <script src="/assets/third-party/choices/scripts/choices.min.js"></script>
+  <script src="/assets/third-party/tinymce/js/tinymce/tinymce.min.js"></script>
+  <script src="/assets/third-party/pikaday/pikaday.js"></script>
+  
+  <script src="/assets//js//data.js"></script>
+  <script src="/assets/js/post-creator.js"></script>
+  <script src="/assets/js/tag-creator.js"></script>
+
+  </body>
+</html>

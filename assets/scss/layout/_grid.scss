@@ -1,0 +1,33 @@
+.l-grid {
+    $block: &;
+  
+    width: 100%;
+  
+    &__row {
+      display: flex;
+      flex-flow: row wrap;
+      margin-left: -($grid-gutter / 2);
+      margin-right: -($grid-gutter / 2);
+  
+      &--row-margin {
+        margin-bottom: $grid-gutter;
+      }
+  
+      &--column-margins {
+        #{$block}__column {
+          margin-bottom: $grid-gutter;
+        }
+      }
+    }
+  
+    &__column {
+      flex: 1 1 0px;
+      padding-left: $grid-gutter / 2;
+      padding-right: $grid-gutter / 2;
+    }
+  }
+
+// Creates the column classes based on breakpoints map
+@each $modifier , $breakpoint in $breakpoints {
+    @include create-col-classes($modifier, $grid-columns, $breakpoint);
+}

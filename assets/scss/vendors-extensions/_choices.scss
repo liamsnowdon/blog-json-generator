@@ -1,0 +1,19 @@
+.choices__list--dropdown .choices__item--selectable.is-highlighted {
+    background-color: $primary-color !important;
+    color: $primary-white !important;
+}
+  
+.choices__list--multiple .choices__item {
+    background-color: $primary-color !important;
+    border-color: $primary-color !important;
+}
+
+.choices__inner {
+    height: 46px;
+    overflow-y: auto;
+}
+
+.choices[data-type*="select-multiple"] .choices__button,
+.choices[data-type*="text"] .choices__button {
+    border-left-color: $primary-white !important;
+}

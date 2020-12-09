@@ -1,0 +1,18 @@
+.l-wrapper {
+    background-color: $primary-white;
+    width: 100%;
+    padding: 40px;
+
+    @include breakpoint('medium', 'down') {
+        padding: 25px;
+    }
+
+    &--grey {
+        background-color: $primary-color;
+        color: $primary-white;
+    }
+
+    &--grey-2 {
+        background-color: $primary-grey;
+    }
+}
