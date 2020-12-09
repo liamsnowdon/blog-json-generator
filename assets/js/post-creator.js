@@ -112,7 +112,7 @@
 
           tinymce.PluginManager.add('caniuse', function (editor) {
             var canIUseWidgetTemplate = '' +
-                '<p class="ciu_embed" data-feature="<% FEATURE %>" data-periods="future_1,current,past_1,past_2" data-accessible-colours="false">' +
+                '<div class="ciu_embed" data-feature="<% FEATURE %>" data-periods="future_1,current,past_1,past_2" data-accessible-colours="false">' +
                     '<picture>' +
                         '<source type="image/webp" srcset="https://caniuse.bitsofco.de/image/<% FEATURE %>.webp">' +
                         '<source type="image/png" srcset="https://caniuse.bitsofco.de/image/<% FEATURE %>.png">' +
