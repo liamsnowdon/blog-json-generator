@@ -29,6 +29,7 @@ export const watchScss = () => {
 
 export const sync = () => {
     browserSync.init({
+        port: 3002,
         server: {
             baseDir: './',
             index: "index.html"

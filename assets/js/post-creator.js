@@ -273,7 +273,7 @@
          */
 
         getSavedForLaterPosts: function () {
-            return JSON.parse(localStorage.getItem(STORAGE.SAVED_FOR_LATER_POSTS));
+            return JSON.parse(localStorage.getItem(STORAGE.SAVED_FOR_LATER_POSTS)) || [];
         },
 
         setSavedForLaterPosts: function (posts) {
