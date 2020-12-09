@@ -62,27 +62,159 @@
          * Initialises the tinyMCE editor for the content textarea
          */
         initTinymce: function () {
-            tinymce.PluginManager.add('inlinecode', function (editor, url) {
-                editor.ui.registry.addButton('inlinecode', {
-                    tooltip: 'Insert inline code sample',
-                    icon: 'sourcecode',
-                    onAction: function () {
-                        var selection = editor.selection.getContent();
+            var self = this;
+            self.canIUseFeatures = [];
 
-                        editor.insertContent('<code class="b-inline-code">' + selection + '</code>');
-                    }
+            this.getFeatures()
+                .then(function () {
+                    self.initTinyMcePlugins();
+                    self.initTinymceEditor();
                 });
-            });
+        },
 
+        initTinyMcePlugins: function () {
+            this.initInlineCodeTinymcePlugin();
+            this.initCanIUseTinymcePlugin();
+        },
+
+        /**
+         * Adds the inline code plugin to tinymce.
+         * 
+         * Wraps the selection with a tag which is styled to be like inline code.
+         * 
+         * @todo change so that you can change it back properly like bold functionality
+         */
+        initInlineCodeTinymcePlugin: function () {
+          tinymce.PluginManager.add('inlinecode', function (editor, url) {
+            editor.ui.registry.addButton('inlinecode', {
+                tooltip: 'Insert inline code sample',
+                icon: 'sourcecode',
+                onAction: function () {
+                    var selection = editor.selection.getContent();
+        
+                    editor.insertContent('<code class="b-inline-code">' + selection + '</code>');
+                }
+            });
+          });
+        },
+
+        /**
+         * Adds the CanIUse plugin to tinymce.
+         * 
+         * Inserts the HTML from https://caniuse.bitsofco.de/
+         * Opens a popup where you can select from the feature list or manually enter the feature
+         * for the widget to use.
+         * 
+         * FYI: The script tag is included in the post page template in the blog repo
+         */
+        initCanIUseTinymcePlugin: function () {
+          var self = this;
+
+          tinymce.PluginManager.add('caniuse', function (editor) {
+            var canIUseWidgetTemplate = '' +
+                '<p class="ciu_embed" data-feature="<% FEATURE %>" data-periods="future_1,current,past_1,past_2" data-accessible-colours="false">' +
+                    '<picture>' +
+                        '<source type="image/webp" srcset="https://caniuse.bitsofco.de/image/<% FEATURE %>.webp">' +
+                        '<source type="image/png" srcset="https://caniuse.bitsofco.de/image/<% FEATURE %>.png">' +
+                        '<img src="https://caniuse.bitsofco.de/image/<% FEATURE %>.jpg" alt="Data on support for the <% FEATURE %> feature across the major browsers from caniuse.com">' +
+                    '</picture>' +
+                '</p>';
+        
+            var openDialog = function () {
+              return editor.windowManager.open({
+                title: 'Add CanIUse Widget',
+                body: {
+                  type: 'panel',
+                  items: [
+                    { type: 'selectbox', name: 'selectFeature', label: 'Select a feature', items: self.canIUseFeatures },
+                    { type: 'input', name: 'textFeature', label: 'Or manually enter a feature' }
+                  ]
+                },
+                buttons: [
+                  { type: 'cancel', text: 'Cancel' },
+                  { type: 'submit', text: 'Add', primary: true }
+                ],
+                onSubmit: function (api) {
+                  var data = api.getData();
+                  var feature = data.textFeature || data.selectFeature;
+
+                  var widgetHtml = canIUseWidgetTemplate.replace(/<% FEATURE %>/g, feature);
+        
+                  editor.insertContent(widgetHtml);
+                  api.close();
+                }
+              });
+            };
+        
+            editor.ui.registry.addButton('caniuse', {
+                tooltip: 'Insert CanIUse widget',
+                icon: 'table',
+                onAction: function () {
+                    // Open window
+                    openDialog();
+                }
+            });
+          });
+        },
+
+        /**
+         * Initialise the tinymce editor.
+         * 
+         * Custom plugins: inlinecode, caniuse
+         */
+        initTinymceEditor: function () {
             tinymce.init({
                 selector: '#content',
                 height: 500,
-                plugins: 'codesample inlinecode lists link image',
-                toolbar: 'undo redo | formatselect | bold italic underline | alignleft aligncenter alignright alignjustify | link | bullist numlist outdent indent | codesample inlinecode | image | removeformat',
+                plugins: 'codesample inlinecode caniuse lists link image',
+                toolbar: 'undo redo | formatselect | bold italic underline | link blockquote | bullist numlist outdent indent | codesample inlinecode caniuse | image | removeformat',
                 menubar: false,
                 image_dimensions: false,
                 image_prepend_url: '/assets/images/posts/'
             });
+        },
+
+        /**
+         * Gets the features from CanIUse using the API from the person who created the widget for displaying
+         * the data.
+         */
+        getFeatures: function () {
+            var url = 'https://api.caniuse.bitsofco.de/features';
+            var self = this;
+
+            return fetch(url)
+                .then(function(response) {
+                    if (!response.ok) {
+                        throw Error(response.statusText);
+                    }
+
+                    return response.json()
+                })
+                .then(function(features) {
+                    features = features
+                      .filter(function (feature) {
+                        return feature.dataSource === 'caniuse';
+                      })
+                      .map(function (feature) {
+                        return {
+                            value: feature.id,
+                            text: feature.title
+                        };
+                    });
+
+                    self.canIUseFeatures = features;
+                })
+                .catch(function (error) {
+                    console.error('There was a problem fetching CanIUse features.', error);
+                })
+                .then(function () {
+                  var defaultOption = {
+                    value: '',
+                    text: !!self.canIUseFeatures.length ? 'Select a feature' : 'No features could be found.'
+                  };
+
+                  self.canIUseFeatures.splice(0, 0, defaultOption);
+                });
         },
 
         initChoices: function () {
