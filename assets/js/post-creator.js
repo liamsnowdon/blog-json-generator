@@ -47,7 +47,9 @@
             this.form = document.querySelector('.js-post-creator-form');
             this.id = this.form.querySelector('.js-id');
             this.file = this.form.querySelector('.js-file');
-            this.imageUrl = this.form.querySelector('.js-image-url');
+            this.ogImageUrl = this.form.querySelector('.js-og-image-url');
+            this.thumbnailImageUrl = this.form.querySelector('.js-thumbnail-image-url');
+            this.headerImageUrl = this.form.querySelector('.js-header-image-url');
             this.author = this.form.querySelector('.js-author');
             this.title = this.form.querySelector('.js-title');
             this.intro = this.form.querySelector('.js-intro');
@@ -55,7 +57,8 @@
             this.category = this.form.querySelector('.js-category');
             this.content = this.form.querySelector('.js-content');
 
-            this.saveForLater = document.querySelector('.js-save-for-later');
+            this.saveForLater = document.querySelector('.js-save');
+            this.reset = document.querySelector('.js-reset');
         },
 
         /**
@@ -250,6 +253,7 @@
             this.loadJsonForm.addEventListener('submit', this.onLoadJsonFormSubmit.bind(this));
             this.savedForLaterForm.addEventListener('submit', this.onSavedForLaterFormSubmit.bind(this));
             this.saveForLater.addEventListener('click', this.onSaveForLater.bind(this));
+            this.reset.addEventListener('click', this.onReset.bind(this));
             this.deletedSavedForLater.addEventListener('click', this.onDeleteSavedFormLater.bind(this));
         },
 
@@ -310,7 +314,9 @@
 
             this.id.value = post.id | null;
             this.file.value = post.file || null;
-            this.imageUrl.value = post.imageUrl || null;
+            this.ogImageUrl.value = post.ogImageUrl || null;
+            this.thumbnailImageUrl.value = post.thumbnailImageUrl || null;
+            this.headerImageUrl.value = post.headerImageUrl || null;
             this.author.value = post.author || null;
             this.title.value = post.title || null;
             this.intro.value = post.intro || null;
@@ -335,7 +341,9 @@
             return {
                 id: this.id ? Number(this.id.value) : null,
                 file: this.file ? this.file.value: null,
-                imageUrl: this.imageUrl ? this.imageUrl.value : null,
+                ogImageUrl: this.ogImageUrl ? this.ogImageUrl.value : null,
+                thumbnailImageUrl: this.thumbnailImageUrl ? this.thumbnailImageUrl.value : null,
+                headerImageUrl: this.headerImageUrl ? this.headerImageUrl.value : null,
                 author: this.author ? this.author.value : null,
             
                 title: this.title.value,
@@ -355,7 +363,9 @@
         resetForm: function () {
             this.id.value = null;
             this.file.value = null;
-            this.imageUrl.value = null;
+            this.ogImageUrl.value = null;
+            this.thumbnailImageUrl.value = null;
+            this.headerImageUrl.value = null;
             this.author.value = null;
             this.title.value = null;
             this.intro.value = null;
@@ -404,6 +414,10 @@
             this.scrollToForm();
         },
 
+        onReset: function () {
+            this.resetForm();
+        },
+
         onSaveForLater: function () {
             tinymce.triggerSave();
 
@@ -418,9 +432,8 @@
 
             this.setSavedForLaterPosts(currentSavedForLaterPosts);
 
-            alert('Post saved for later.');
+            alert('Post saved.');
             
-            this.resetForm();
             this.setSavedForLaterChoices();
             
             this.savedForLaterChoicesSelect.removeActiveItems();
@@ -428,7 +441,7 @@
         },
 
         onDeleteSavedFormLater: function () {
-            if (this.savedForLater.value === '') {
+            if (this.savedForLater.value === '' || !confirm('Are you sure?')) {
                 return;
             }
 
