@@ -351,7 +351,6 @@
                 datePosted: this.datePosted ? new Date(this.datePosted.value).toISOString() : null,
                 category: Number(this.category.value),
                 tags: ['TAG_ID', 'TAG_ID'],
-                relatedPosts: ['RELATED_POST_ID', 'RELATED_POST_ID'],
 
                 content: this.content.value
             };
