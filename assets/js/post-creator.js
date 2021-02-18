@@ -70,14 +70,15 @@
 
             this.getFeatures()
                 .then(function () {
-                    self.initTinyMcePlugins();
+                    self.initTinymcePlugins();
                     self.initTinymceEditor();
                 });
         },
 
-        initTinyMcePlugins: function () {
+        initTinymcePlugins: function () {
             this.initInlineCodeTinymcePlugin();
             this.initCanIUseTinymcePlugin();
+            this.initCodepenPlugin();
         },
 
         /**
@@ -160,6 +161,43 @@
           });
         },
 
+        initCodepenPlugin: function () {
+            tinymce.PluginManager.add('codepen', function (editor) {
+                var openDialog = function () {
+                  return editor.windowManager.open({
+                    title: 'Add Codepen Widget',
+                    body: {
+                      type: 'panel',
+                      items: [
+                        { type: 'input', name: 'embedCode', label: 'Embed code' }
+                      ]
+                    },
+                    buttons: [
+                      { type: 'cancel', text: 'Cancel' },
+                      { type: 'submit', text: 'Add', primary: true }
+                    ],
+                    onSubmit: function (dialog) {
+                      var data = dialog.getData();
+                      
+                      if (!data.embedCode) return;
+            
+                      editor.insertContent(data.embedCode);
+                      dialog.close();
+                    }
+                  });
+                };
+            
+                editor.ui.registry.addButton('codepen', {
+                    tooltip: 'Insert Codepen widget',
+                    icon: 'table-insert-column-after',
+                    onAction: function () {
+                        // Open window
+                        openDialog();
+                    }
+                });
+              });
+        },
+
         /**
          * Initialise the tinymce editor.
          * 
@@ -169,8 +207,8 @@
             tinymce.init({
                 selector: '#content',
                 height: 500,
-                plugins: 'codesample inlinecode caniuse lists link image',
-                toolbar: 'undo redo | formatselect | bold italic underline | link blockquote | bullist numlist outdent indent | codesample inlinecode caniuse | image | removeformat',
+                plugins: 'codesample inlinecode caniuse codepen lists link image',
+                toolbar: 'undo redo | formatselect | bold italic underline | link blockquote | bullist numlist outdent indent | image | codesample inlinecode | caniuse codepen | removeformat',
                 menubar: false,
                 image_dimensions: false,
                 image_prepend_url: '/assets/images/posts/'
